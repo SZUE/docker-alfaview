@@ -53,7 +53,7 @@ RUN apt-get update && apt-get install -y \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV ALFAVIEW_RELEASE beta
-ENV ALFAVIEW_VERSION 8.10.0
+ENV ALFAVIEW_VERSION 8.11.0
 
 RUN curl -sSL https://production-alfaview-assets.alfaview.com/$ALFAVIEW_RELEASE/linux/alfaview_$ALFAVIEW_VERSION.deb -o /tmp/alfaview_$ALFAVIEW_VERSION.deb \
 	&& dpkg -i /tmp/alfaview_$ALFAVIEW_VERSION.deb \
