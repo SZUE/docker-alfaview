@@ -1,17 +1,10 @@
 # docker-alfaview (legacy machine support)
+## quickstart
+1. checkout
+2. edit alfaview.sh (row 20-22 -> how many cams and which of those do you want to share with the container?) - start with /dev/video0 only if unsure.
+3. start ./alfaview.sh 
 
-## Quickstart:
-* checkout repo
-
-* build dockerimage (once per update) :|:  
-## docker build --rm --build-arg USERUID=$(id -u) --build-arg DISPLAY=${DISPLAY} -t alfaview:latest .
-wichtig: den Punkt am Ende bitte nicht übersehen!
-
-* alfaview benutzen - mit 3 Video Devices (eines sollte genügen) und schlankes bind-mount verwendet
-## docker run -it --rm --mount type=bind,src=$HOME/.local/share/alfaview,dst=/home/alfaview/.local/share/alfaview --device /dev/snd --device /dev/dri --gpus=all --cpuset-cpus 0 --memory 512mb --network host --device /dev/video0 --device /dev/video1 --device /dev/video2 alfaview:latest
-
-
-
+## command switches
                         Usage: /opt/alfaview/alfaview [options] url
 
                         Options:
@@ -106,23 +99,3 @@ wichtig: den Punkt am Ende bitte nicht übersehen!
 
                         Arguments:
                         url                                    web launch url
-
-
-### DEPRECATED - before 8.18.2
-* build image via: 
-docker build --pull --no-cache --rm --build-arg USERUID=$(id -u) --build-arg DISPLAY=${DISPLAY} -t alfaview:beta-8.18.2 -f "Dockerfile"
-
-* run container:
-AS VERBOSE DEBUG CONSOLE
-docker run -it --rm --cpuset-cpus 0 --memory 512mb --network host --mount type=bind,src=$HOME/.local/share/alfaview,dst=/home/alfaview/.local/share/alfaview --device /dev/snd --device /dev/dri --device /dev/video0 --device /dev/video1 --device /dev/video2 alfaview:latest
-
-OR DETACHED if stable
-docker run -d --rm --cpuset-cpus 0 --memory 512mb --network host --mount type=bind,src=$HOME/.local/share/alfaview,dst=/home/alfaview/.local/share/alfaview --device /dev/snd --device /dev/dri --device /dev/video0 --device /dev/video1 --device /dev/video2 alfaview:latest
-
-
-
-* run alfaview anytime with `docker run -d --rm --network host --cpuset-cpus 0 --memory 512mb -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR -v $HOME/.local/share/alfaview:/home/alfaview/.local/share/alfaview --device /dev/snd --device /dev/video[0-3] --device /dev/dri -v /dev/shm:/dev/shm  alfaview:latest`
-* pro-tipp: create a alias in ~/.bash_aliases 
-
-
-docker build --pull --no-cache --rm --build-arg USERUID=$(id -u) --build-arg DISPLAY=${DISPLAY} -t alfaview:latest . && docker run -it --rm --cpuset-cpus 0 --memory 512mb --network host -v $HOME/.local/share/alfaview:/home/alfaview/.local/share/alfaview --device /dev/snd --device /dev/dri --device /dev/video0 --name xanderstruck alfaview:latest
